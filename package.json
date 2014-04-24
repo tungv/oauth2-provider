@@ -1,0 +1,33 @@
+{
+  "name": "oauth2-provider",
+  "version": "0.0.0",
+  "description": "Provide a base class for customizable oauth2 provider",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gmanvn/oauth2-provider.git"
+  },
+  "keywords": [
+    "oauth2",
+    "oauth2",
+    "provider",
+    "express",
+    "coffee script"
+  ],
+  "author": "me@tungv.com",
+  "license": "MIT",
+  "readmeFilename": "README.md",
+  "gitHead": "3407437b42f0754d9390f44443927bcdadf749b7",
+  "dependencies": {
+    "lodash": "~2.4.1",
+    "passport": "~0.2.0",
+    "oauth2orize": "~1.0.1",
+    "fibrous": "~0.3.3",
+    "connect-ensure-login": "~0.1.1",
+    "uuid-pure": "~1.0.10",
+    "coffee-script": "~1.7.1"
+  }
+}
