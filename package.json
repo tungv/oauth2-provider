@@ -1,5 +1,5 @@
 {
-  "name": "oauth2-provider",
+  "name": "t-oauth2-provider",
   "version": "0.0.0",
   "description": "Provide a base class for customizable oauth2 provider",
   "main": "index.js",
