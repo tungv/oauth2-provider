@@ -23,9 +23,7 @@
   "gitHead": "3407437b42f0754d9390f44443927bcdadf749b7",
   "dependencies": {
     "lodash": "~2.4.1",
-    "passport": "~0.2.0",
     "oauth2orize": "~1.0.1",
-    "fibrous": "~0.3.3",
     "connect-ensure-login": "~0.1.1",
     "uuid-pure": "~1.0.10",
     "coffee-script": "~1.7.1"

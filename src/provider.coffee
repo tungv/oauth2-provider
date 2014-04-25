@@ -1,10 +1,9 @@
 _ = require 'lodash'
 oauth2orize = require 'oauth2orize'
-fibrous = require 'fibrous'
 ensureLogin = require 'connect-ensure-login'
-passport = require('passport')
 util = require './util.coffee'
 
+passport = null
 
 
 class Provider
@@ -16,11 +15,12 @@ class Provider
 
 
 
-  constructor: (config)->
+  constructor: (config, deps)->
     ## normalize parameters
     throw new Error 'Your argument is invalid: need config object' unless config?
     @renderFunction = config.renderFunction or defaultRenderFunction
 
+    passport = deps.passport
 
     ## init oauth server
     @server = oauth2orize.createServer()
