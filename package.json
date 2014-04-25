@@ -26,6 +26,11 @@
     "oauth2orize": "~1.0.1",
     "connect-ensure-login": "~0.1.1",
     "uuid-pure": "~1.0.10",
-    "coffee-script": "~1.7.1"
+    "coffee-script": "~1.7.1",
+
+    "passport-http": "~0.2.2",
+    "passport-http-bearer": "~1.0.1",
+    "passport-local": "~1.0.0",
+    "passport-oauth2-client-password": "~0.1.1"
   }
 }

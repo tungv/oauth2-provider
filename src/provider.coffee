@@ -3,6 +3,8 @@ oauth2orize = require 'oauth2orize'
 ensureLogin = require 'connect-ensure-login'
 util = require './util.coffee'
 
+initPassport = require './passport-middlewares.coffee'
+
 passport = null
 
 
@@ -13,16 +15,16 @@ class Provider
   defaultRenderFunction = (req, res)->
     res.render('dialog', { transactionID: req.oauth2.transactionID, user: req.user, client: req.oauth2.client })
 
-
-
   constructor: (config, deps)->
     ## normalize parameters
     throw new Error 'Your argument is invalid: need config object' unless config?
     @renderFunction = config.renderFunction or defaultRenderFunction
 
-    passport = deps.passport
 
-    ## init oauth server
+    @passport = passport = deps.passport
+    throw new Error 'passport instance must be provided' unless passport
+
+      ## init oauth server
     @server = oauth2orize.createServer()
 
     ## register serialize/deserialize functions (easier for inheritance)
@@ -47,6 +49,9 @@ class Provider
     ## exchange id/password for access token
     @server.exchange oauth2orize.exchange.password (client, username, password, scope, done)=>
       @exchangePasswordForToken client, username, password, scope, done
+
+    ## init passport
+    initPassport passport, this
 
   authorization: ->
     [
