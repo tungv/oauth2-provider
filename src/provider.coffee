@@ -29,10 +29,10 @@ class Provider
 
     ## register serialize/deserialize functions (easier for inheritance)
     @server.serializeClient ()=>
-      @serialize arguments...
+      @serializeClient arguments...
 
     @server.deserializeClient ()=>
-      @deserialize arguments...
+      @deserializeClient arguments...
 
     ## register grant code
     @server.grant oauth2orize.grant.code (client, redirectURI, user, ares, done)=>
@@ -68,7 +68,7 @@ class Provider
 
   token: ->
     [
-      passport.authenticate(@exchangeMethods, { session: false }),
+      passport.authenticate(@exchangeMethods or ['basic'], { session: false }),
       @server.token(),
       @server.errorHandler()
     ]
