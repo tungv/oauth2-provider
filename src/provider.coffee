@@ -46,6 +46,10 @@ class Provider
     @server.exchange oauth2orize.exchange.code (client, code, redirectURI, done)=>
       @exchangeCodeForToken client, code, redirectURI, done
 
+    ## exchange client credentials for access token
+    @server.exchange oauth2orize.exchange.clientCredentials (client, scope, done)=>
+      @exchangeClientCredentialsForToken client, scope, done
+
     ## exchange id/password for access token
     @server.exchange oauth2orize.exchange.password (client, username, password, scope, done)=>
       @exchangePasswordForToken client, username, password, scope, done

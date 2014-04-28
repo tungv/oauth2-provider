@@ -1,24 +1,11 @@
 _ = require 'lodash'
-Provider = require 't-oauth2-provider'
+Provider = require '../../src/provider.coffee'
 
 class InMemoryProvider extends Provider
   constructor: ()->
     @db =
-      user: {
-        'adw12asd23': {
-          username: 'admin'
-          password: 'admin'
-          name: 'Admin'
-          id: 'adw12asd23'
-        }
-      }
-      client: {
-        'awesome-app': {
-          clientId: 'awesome-app'
-          clientSecret: 'awesome-secret'
-          name: 'Awesome'
-        }
-      }
+      user: {}
+      client: {}
       grant: {}
       accessToken: {}
 
@@ -33,10 +20,12 @@ class InMemoryProvider extends Provider
     return token
 
   findUserByUsername: (username)->
+    #debugger;
     _.filter @db.user, (user)-> user.username is username
     .pop()
 
   issueGrantCode: (client, redirectURI, user, ares, callback)->
+    #debugger;
     code = Provider.uid 16
     @db.grant[code] = {
       code
@@ -48,9 +37,11 @@ class InMemoryProvider extends Provider
     callback null, code
 
   issueImplicitToken: (client, user, ares, callback) ->
+    #debugger;
     callback null, @newToken client.clientId, user.id
 
   exchangeCodeForToken: (client, code, redirectURI, done) ->
+    #debugger;
     grant = @db.grant[code]
 
     return done null, false if client.id isnt grant.client or redirectURI isnt grant.redirectURI
@@ -58,8 +49,9 @@ class InMemoryProvider extends Provider
     done null, @newToken grant.client, grant.user
 
   exchangePasswordForToken: (client, username, password, scope, done)->
+    #debugger;
     try
-    ## validating client
+      ## validating client
       clientId = client.clientId
       clientSecret = client.clientSecret
       localClient = @db.client[clientId]
@@ -77,7 +69,20 @@ class InMemoryProvider extends Provider
     catch ex
       done ex
 
+  exchangeClientCredentialsForToken: (client, scope, done)->
+    #debugger;
+    ## validating client
+    clientId = client.clientId
+    clientSecret = client.clientSecret
+    localClient = @db.client[clientId]
+    return done null, false unless localClient?.clientSecret is clientSecret
+
+    ## provide new token
+    return done null, @newToken clientId, null
+
+
   findClient: (clientId, redirectURI, cb)->
+    #debugger;
     ## WARNING: For security purposes, it is highly advisable to check that
     ##          redirectURI provided by the client matches one registered with
     ##          the server.  For simplicity, this example does not.  You have
@@ -85,6 +90,8 @@ class InMemoryProvider extends Provider
     cb null, @db.client[clientId], redirectURI
 
   validateUser: (username, password, done)->
+    #debugger;
+
     ## password must be provided
     return done null, false unless password
     user = @findUserByUsername username
@@ -94,6 +101,7 @@ class InMemoryProvider extends Provider
     return done null, user
 
   validateClient: (clientId, clientSecret, done)->
+    #debugger;
     return done null, false unless clientSecret
     client = @db.client[clientId]
     return done null, false if client?.clientSecret isnt clientSecret
@@ -101,6 +109,7 @@ class InMemoryProvider extends Provider
     return done null, client
 
   validateToken: (accessToken, done)->
+    #debugger;
     token = @db.accessToken[accessToken]
     return done null, false unless token
 
@@ -125,13 +134,13 @@ class InMemoryProvider extends Provider
     return done null, client, scope:'*'
 
   ## serialize client into session storage (can be overwrite)
-  serializeClient: (client, done)-> done null, client.clientId
+  serializeClient: (client, done)-> #debugger; done null, client.clientId
 
   ## deserialize client from session storage (can be overwrite)
-  deserializeClient: (id, done)-> done null, @db.client[id]
+  deserializeClient: (id, done)-> #debugger; done null, @db.client[id]
 
-  serializeUser: (user, done) -> done null, user.id
+  serializeUser: (user, done) -> #debugger; done null, user.id
 
-  deserializeUser: (id, done) ->  done null, @db.user[id]
+  deserializeUser: (id, done) ->  #debugger; done null, @db.user[id]
 
 module.exports = InMemoryProvider
