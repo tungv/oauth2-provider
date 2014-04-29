@@ -1,10 +1,10 @@
 {
   "name": "t-oauth2-provider",
-  "version": "0.0.0",
+  "version": "0.0.2",
   "description": "Provide a base class for customizable oauth2 provider",
   "main": "index.js",
   "scripts": {
-    "test": "mocha"
+    "test": "sh run_tests.sh"
   },
   "repository": {
     "type": "git",
