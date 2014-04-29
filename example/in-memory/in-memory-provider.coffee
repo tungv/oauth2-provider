@@ -134,13 +134,21 @@ class InMemoryProvider extends Provider
     return done null, client, scope:'*'
 
   ## serialize client into session storage (can be overwrite)
-  serializeClient: (client, done)-> #debugger; done null, client.clientId
+  serializeClient: (client, done)->
+    #debugger;
+    done null, client.clientId
 
   ## deserialize client from session storage (can be overwrite)
-  deserializeClient: (id, done)-> #debugger; done null, @db.client[id]
+  deserializeClient: (id, done)->
+    #debugger;
+    done null, @db.client[id]
 
-  serializeUser: (user, done) -> #debugger; done null, user.id
+  serializeUser: (user, done) ->
+    #debugger;
+    done null, user.id
 
-  deserializeUser: (id, done) ->  #debugger; done null, @db.user[id]
+  deserializeUser: (id, done) ->
+    #debugger;
+    done null, @db.user[id]
 
 module.exports = InMemoryProvider

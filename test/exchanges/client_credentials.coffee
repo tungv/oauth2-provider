@@ -18,16 +18,7 @@ module.exports = (mockup)->
         json: query
       }, cb
 
-    apiRequest = (token, cb)->
-      headers = {
-        Authorization: "#{token.token_type} #{ token.access_token }"
-      }
-
-      request.get {
-        uri: "#{PROVIDER_BASEURL}/api/me"
-        json: true
-        headers,
-      }, cb
+    apiRequest = mockup.methods.apiRequest
 
 
     describe 'Successful scenario', ->

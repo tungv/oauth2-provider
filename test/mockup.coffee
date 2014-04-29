@@ -1,3 +1,5 @@
+request = require 'request'
+
 module.exports =
   data:
     users :
@@ -43,3 +45,14 @@ module.exports =
         failureRedirect: "/login"
 
       return app
+
+    apiRequest:  (token, cb)->
+      headers = {
+        Authorization: "#{token.token_type} #{ token.access_token }"
+      }
+
+      request.get {
+        uri: "#{module.exports.config.PROVIDER_BASEURL}/api/me"
+        json: true
+        headers,
+      }, cb

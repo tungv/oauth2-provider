@@ -17,6 +17,9 @@ describe 'Provider', ->
   describe 'Exchanges', ->
     ## mockup testing data
     provider = new InMemProvider
+    provider.renderFunction = (req, res)->
+      res.json { transactionID: req.oauth2.transactionID, user: req.user, client: req.oauth2.client }
+
     provider.db.user = mockup.data.users
     provider.db.client = mockup.data.clients
 
@@ -29,6 +32,7 @@ describe 'Provider', ->
 
 
     require('./exchanges/client_credentials.coffee')(mockup)
+    require('./exchanges/authorization_code.coffee')(mockup)
 
 
 
