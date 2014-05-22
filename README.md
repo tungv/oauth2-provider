@@ -55,10 +55,10 @@ To use client password grant types, the consumer code need to do a `POST` to `{h
 
 The consumer should receive a json object with the following format:
 
-``` json
+```
   {
     "token_type": "Bearer",
-    "access_token": <your access token>
+    "access_token": "<your access token>"
   }
 ```
 
