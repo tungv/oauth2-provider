@@ -33,6 +33,8 @@ Note: your path names can be different; however, I will use the above names in t
 
 ### Client Password
 
+Client Password grant type is used when the consumer need to make API calls to protected resources *as an application*, not *as a resource owner*. It's useful to get total online users for example (which not related to any particular user).
+
 To use client password grant types, the consumer code need to do a `POST` to `{hostname}/oauth/token`
 
 ``` coffeescript
