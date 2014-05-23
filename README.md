@@ -71,5 +71,15 @@ From now on, your consumer can call protected resource by adding a header in eac
 **Note**: It's important to set `json:true` because the endpoint expects an `application/json` request content-type.
 
 #### How it works:
-When a `POST` to `/oauth/token` is made, provider will verify your client credentials by calling `provider.validateClient(clientId, clientSecret, done)` which will asynchronously return the client object or `false` depend on the input's validity
+#### 1. validation step
+When a `POST` to `/oauth/token` is made, provider will verify your client credentials by calling `provider.validateClient(clientId, clientSecret, done)` which will asynchronously return the client object or `false` depend on the input's validity via `done` (which is an err-first node-style callback).
+
+#### 2. token issue step
+If valid, that request will login with the given client and call next middleware, where an access token is actually issued. 
+In this step, `provider.exchangeClientCredentialsForToken(client, scope, done)` is called with client with `scope` is the requesting scope.
+You will have to asynchronously return a new token as a string via done (which is also an err-first node-style callback).
+
+
+
+
 
