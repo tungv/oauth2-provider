@@ -7,24 +7,27 @@ initPassport = require './passport-middlewares.coffee'
 
 passport = null
 
+passby = (req, res, next) ->
+  next()
 
 class Provider
 
   @uid = util.uid
 
   defaultRenderFunction = (req, res)->
+    console.log "render Function on abstract provider"
     res.render('dialog', { transactionID: req.oauth2.transactionID, user: req.user, client: req.oauth2.client })
 
   constructor: (config, deps)->
     ## normalize parameters
-    throw new Error 'Your argument is invalid: need config object' unless config?
+    throw  new Error 'Your argument is invalid: need config object' unless config?
     @renderFunction = config.renderFunction or defaultRenderFunction
 
 
     @passport = passport = deps.passport
     throw new Error 'passport instance must be provided' unless passport
 
-      ## init oauth server
+    ## init oauth server
     @server = oauth2orize.createServer()
 
     ## register serialize/deserialize functions (easier for inheritance)
@@ -60,8 +63,11 @@ class Provider
   authorization: ->
     [
       ensureLogin.ensureLoggedIn()
-      @server.authorization (clientId, redirectURI, done)=> @findClient clientId, redirectURI, done
-      @renderFunction
+      @server.authorization (clientId, redirectURI, done)=>
+        @findClient clientId, redirectURI, done
+
+      if typeof @autoApprove is 'function' then @autoApprove.bind(this) else passby
+      @renderFunction.bind(this)
     ]
 
   decision: ->
